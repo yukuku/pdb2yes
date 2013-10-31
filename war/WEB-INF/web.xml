@@ -5,12 +5,20 @@
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
     <servlet>
-        <servlet-name>yuku.pdb2yes.servlet.UploadPdb</servlet-name>
-        <servlet-class>yuku.pdb2yes.servlet.UploadPdb</servlet-class>
+        <servlet-name>yuku.pdb2yes.servlet.ConvertPdbToYes</servlet-name>
+        <servlet-class>yuku.pdb2yes.servlet.ConvertPdbToYes</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>yuku.pdb2yes.servlet.UploadPdb</servlet-name>
-        <url-pattern>/yuku.pdb2yes.servlet.UploadPdb</url-pattern>
+        <servlet-name>yuku.pdb2yes.servlet.ConvertPdbToYes</servlet-name>
+        <url-pattern>/yuku.pdb2yes.servlet.ConvertPdbToYes</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>yuku.pdb2yes.servlet.DownloadBlob</servlet-name>
+        <servlet-class>yuku.pdb2yes.servlet.DownloadBlob</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>yuku.pdb2yes.servlet.DownloadBlob</servlet-name>
+        <url-pattern>/yuku.pdb2yes.servlet.DownloadBlob</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

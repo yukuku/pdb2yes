@@ -32,15 +32,38 @@ public class PdbInput {
         public PericopeData pericopeData;
     }
 
+    public static class InputException extends RuntimeException {
+        public InputException(String s) {
+            super(s);
+        }
+    }
+
 	public Result read(final PDBDataStream pdbDataStream, final Params params) throws IOException {
 		final Result res = new Result();
 
         BiblePlusPDB pdb_ = new BiblePlusPDB(pdbDataStream, Tabs.hebrewTab, Tabs.greekTab);
 		if (params.inputEncoding != null) pdb_.setEncoding(params.inputEncoding);
-		Log.d(TAG, "Encoding used: " + params.inputEncoding); //$NON-NLS-1$
+        Log.d(TAG, "Encoding used: " + params.inputEncoding); //$NON-NLS-1$
+
+        // manual check
+        {
+            byte[] data = new byte[4];
+            pdbDataStream.seek(60);
+            pdbDataStream.read(data);
+            if (!Arrays.equals(data, "bibl".getBytes())) {
+                throw new InputException("Not a valid PDB file. Type of PDB file is '" + new String(data) + "', not 'bibl'");
+            }
+            pdbDataStream.read(data);
+            if (!Arrays.equals(data, "PPBL".getBytes())) {
+                throw new InputException("Not a valid PDB file. Creator code of PDB file is '" + new String(data) + "', not 'PPBL'");
+            }
+        }
+
+        // pdb library check
+        pdbDataStream.seek(0);
         final boolean success = pdb_.loadVersionInfo();
         if (!success) {
-            throw new IOException("Can't read version info: " + pdb_.getFailReason());
+            throw new InputException("Can't read version info: " + pdb_.getFailReason());
         }
         pdb_.loadWordIndex();
 

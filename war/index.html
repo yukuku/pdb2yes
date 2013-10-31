@@ -1,15 +1,11 @@
 <html>
 <body>
 
-<h3>Servlets</h3>
-<p><a href="/yuku.pdb2yes.servlet.UploadPdb">yuku.pdb2yes.servlet.UploadPdb</a></p>
-
-<h3>Upload PDB</h3>
-<form action="/yuku.pdb2yes.servlet.UploadPdb" method="post" enctype="multipart/form-data">
+<h3>Convert a PalmBible+ PDB file to a YES file</h3>
+<form action="/yuku.pdb2yes.servlet.ConvertPdbToYes" method="post" enctype="multipart/form-data">
     <input type="file" name="pdbfile" />
     <input type="submit" value="Convert" />
 </form>
-
 
 </body>
 </html>

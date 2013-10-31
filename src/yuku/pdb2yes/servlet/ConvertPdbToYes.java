@@ -1,5 +1,10 @@
 package yuku.pdb2yes.servlet;
 
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.files.AppEngineFile;
+import com.google.appengine.api.files.FileService;
+import com.google.appengine.api.files.FileServiceFactory;
+import com.google.appengine.api.files.FileWriteChannel;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
@@ -15,27 +20,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.ByteBuffer;
 import java.util.logging.Logger;
 
 
-public class UploadPdb extends HttpServlet {
-    private static final Logger log = Logger.getLogger(UploadPdb.class.getName());
+public class ConvertPdbToYes extends HttpServlet {
+    private static final Logger log = Logger.getLogger(ConvertPdbToYes.class.getName());
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/plain");
-        resp.getWriter().println("Hello world from " + UploadPdb.class.getSimpleName());
+        resp.getWriter().println("Hello world from " + ConvertPdbToYes.class.getSimpleName());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final ServletFileUpload upload = new ServletFileUpload();
         final PrintWriter writer = resp.getWriter();
-        resp.setContentType("text/plain");
+        resp.setContentType("text/html");
+        writer.println("<pre>");
 
         try {
             final FileItemIterator iterator = upload.getItemIterator(req);
             PDBMemoryStream pdbMemoryStream = null;
+            String pdbFilename = null;
 
             while (iterator.hasNext()) {
                 final FileItemStream item = iterator.next();
@@ -51,7 +59,7 @@ public class UploadPdb extends HttpServlet {
                     // example, wrap them in a Blob and commit them to the
                     // datastore).
                     if ("pdbfile".equals(item.getFieldName())) {
-                        final String pdbFilename = item.getName();
+                        pdbFilename = item.getName();
                         pdbMemoryStream = new PDBMemoryStream(item.openStream(), pdbFilename);
                     }
                 }
@@ -62,21 +70,43 @@ public class UploadPdb extends HttpServlet {
                 return;
             }
 
+            // read pdb
             final PdbInput pdbInput = new PdbInput();
             final PdbInput.Params params = new PdbInput.Params();
             params.includeAddlTitle = true;
             params.inputEncoding = "utf-8";
             final PdbInput.Result result = pdbInput.read(pdbMemoryStream, params);
 
-            writer.println("Result:");
-            writer.println(result.textDb.getBookCount() + " books");
+            writer.println("Result: " + result.textDb.getBookCount() + " books");
 
+            // convert to yes
             final MemoryRandomOutputStream memory = new MemoryRandomOutputStream();
             Yes2Common.createYesFile(memory, result.versionInfo, result.textDb, result.pericopeData, true, null, null);
             memory.close();
 
+            final String yesFilename = pdbFilename == null ? "noname.yes" : pdbFilename.toLowerCase().endsWith(".pdb") ? pdbFilename.replaceAll("(?i)\\.pdb", ".yes") : (pdbFilename + ".yes");
             writer.println("yes file length: " + memory.getBufferLength());
 
+            // store to appengine blobstore
+            // Get a file service
+            FileService fileService = FileServiceFactory.getFileService();
+
+            // Create a new Blob file with mime-type "text/plain"
+            AppEngineFile file = fileService.createNewBlobFile("application/octet-stream", yesFilename);
+
+            // Open a channel to write to it
+            FileWriteChannel writeChannel = fileService.openWriteChannel(file, true);
+
+            // Write to the channel
+            writeChannel.write(ByteBuffer.wrap(memory.getBuffer(), memory.getBufferOffset(), memory.getBufferLength()));
+
+            // Close and save the file path for writing later
+            writeChannel.closeFinally();
+
+            final BlobKey blobKey = fileService.getBlobKey(file);
+            writer.println("Download yes file: <a href='/" + DownloadBlob.class.getName() + "?blobkey=" + blobKey.getKeyString() + "'>" + yesFilename + "</a>");
+        } catch (PdbInput.InputException e) {
+            writer.println("Error in input: " + e.getMessage());
         } catch (FileUploadException e) {
             throw new ServletException(e);
         }

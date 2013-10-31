@@ -1,0 +1,26 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="pdb2yes:war exploded">
+    <output-path>$PROJECT_DIR$/war/</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="pdb2yes" />
+          <element id="module-output" name="BiblePlus" />
+          <element id="module-output" name="SimpleTrove" />
+          <element id="module-output" name="AlkitabYes2" />
+          <element id="module-output" name="AlkitabModel" />
+          <element id="module-output" name="AlkitabIo" />
+          <element id="module-output" name="BintexReader" />
+          <element id="module-output" name="BintexWriter" />
+          <element id="module-output" name="Snappy" />
+          <element id="module-output" name="AlkitabConverter" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="AppEngine API" />
+          <element id="library" level="project" name="commons-fileupload-1.3" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="pdb2yes/web/Web" />
+    </root>
+  </artifact>
+</component>

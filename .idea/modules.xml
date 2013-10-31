@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../androidbible/AlkitabConverter/AlkitabConverter.iml" filepath="$PROJECT_DIR$/../../androidbible/AlkitabConverter/AlkitabConverter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../androidbible/AlkitabIo/AlkitabIo.iml" filepath="$PROJECT_DIR$/../../androidbible/AlkitabIo/AlkitabIo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../androidbible/AlkitabModel/AlkitabModel.iml" filepath="$PROJECT_DIR$/../../androidbible/AlkitabModel/AlkitabModel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../androidbible/AlkitabYes2/AlkitabYes2.iml" filepath="$PROJECT_DIR$/../../androidbible/AlkitabYes2/AlkitabYes2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../androidbible/BiblePlus/BiblePlus.iml" filepath="$PROJECT_DIR$/../../androidbible/BiblePlus/BiblePlus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../yuku-android-util/BintexReader/BintexReader.iml" filepath="$PROJECT_DIR$/../../yuku-android-util/BintexReader/BintexReader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../yuku-android-util/BintexWriter/BintexWriter.iml" filepath="$PROJECT_DIR$/../../yuku-android-util/BintexWriter/BintexWriter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../yuku-android-util/SimpleTrove/SimpleTrove.iml" filepath="$PROJECT_DIR$/../../yuku-android-util/SimpleTrove/SimpleTrove.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../yuku-android-util/Snappy/Snappy.iml" filepath="$PROJECT_DIR$/../../yuku-android-util/Snappy/Snappy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pdb2yes.iml" filepath="$PROJECT_DIR$/pdb2yes.iml" />
+    </modules>
+  </component>
+</project>
+

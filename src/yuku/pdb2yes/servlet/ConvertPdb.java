@@ -26,13 +26,13 @@ import java.nio.ByteBuffer;
 import java.util.logging.Logger;
 
 
-public class ConvertPdbToYes extends HttpServlet {
-    private static final Logger log = Logger.getLogger(ConvertPdbToYes.class.getName());
+public class ConvertPdb extends HttpServlet {
+    private static final Logger log = Logger.getLogger(ConvertPdb.class.getName());
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/plain");
-        resp.getWriter().println("Hello world from " + ConvertPdbToYes.class.getSimpleName());
+        resp.getWriter().println("Hello world from " + ConvertPdb.class.getSimpleName());
     }
 
     @Override
@@ -115,7 +115,7 @@ public class ConvertPdbToYes extends HttpServlet {
             }
 
 
-            writer.println("yes file length: " + memory.getBufferLength());
+            writer.println("output file size: " + memory.getBufferLength());
 
             // store to appengine blobstore
             // Get a file service
@@ -134,7 +134,7 @@ public class ConvertPdbToYes extends HttpServlet {
             writeChannel.closeFinally();
 
             final BlobKey blobKey = fileService.getBlobKey(file);
-            writer.println("Download yes file: <a href='/" + DownloadBlob.class.getName() + "?blobkey=" + blobKey.getKeyString() + "'>" + outputfilename + "</a>");
+            writer.println("Download output file: <a href='/" + DownloadBlob.class.getName() + "?blobkey=" + blobKey.getKeyString() + "'>" + outputfilename + "</a>");
         } catch (PdbInput.InputException e) {
             writer.println("Error in input: " + e.getMessage());
         } catch (FileUploadException e) {

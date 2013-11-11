@@ -4,14 +4,14 @@
 <h2>Convert a PalmBible+ PDB file</h2>
 
 <h3>… to a YES file</h3>
-<form action="/yuku.pdb2yes.servlet.ConvertPdbToYes" method="post" enctype="multipart/form-data">
+<form action="/yuku.pdb2yes.servlet.ConvertPdb" method="post" enctype="multipart/form-data">
     <input type="file" name="pdbfile" />
     <input type="hidden" name="outputformat" value="yes" />
     <input type="submit" value="Convert" />
 </form>
 
 <h3>… or to a YET (text) file</h3>
-<form action="/yuku.pdb2yes.servlet.ConvertPdbToYes" method="post" enctype="multipart/form-data">
+<form action="/yuku.pdb2yes.servlet.ConvertPdb" method="post" enctype="multipart/form-data">
     <input type="file" name="pdbfile" />
     <input type="hidden" name="outputformat" value="yet" />
     <input type="submit" value="Convert" />

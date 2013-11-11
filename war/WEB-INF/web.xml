@@ -6,11 +6,11 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
     <servlet>
         <servlet-name>yuku.pdb2yes.servlet.ConvertPdbToYes</servlet-name>
-        <servlet-class>yuku.pdb2yes.servlet.ConvertPdbToYes</servlet-class>
+        <servlet-class>yuku.pdb2yes.servlet.ConvertPdb</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>yuku.pdb2yes.servlet.ConvertPdbToYes</servlet-name>
-        <url-pattern>/yuku.pdb2yes.servlet.ConvertPdbToYes</url-pattern>
+        <url-pattern>/yuku.pdb2yes.servlet.ConvertPdb</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>yuku.pdb2yes.servlet.DownloadBlob</servlet-name>

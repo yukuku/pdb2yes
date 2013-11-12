@@ -11,6 +11,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import yuku.alkitab.yes2.io.MemoryRandomOutputStream;
+import yuku.alkitabconverter.util.Rec;
 import yuku.alkitabconverter.yes_common.Yes2Common;
 import yuku.alkitabconverter.yet.YetFileOutput;
 import yuku.pdb2yes.core.PDBMemoryStream;
@@ -23,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.ByteBuffer;
+import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 
@@ -47,6 +50,7 @@ public class ConvertPdb extends HttpServlet {
             PDBMemoryStream pdbMemoryStream = null;
             String pdbFilename = null;
             String outputformat = null;
+            String charset = "UTF-8";
 
             while (iterator.hasNext()) {
                 final FileItemStream item = iterator.next();
@@ -56,6 +60,9 @@ public class ConvertPdb extends HttpServlet {
                     log.info("Got a form field: " + fieldName);
                     if ("outputformat".equals(fieldName)) {
                         outputformat = Streams.asString(item.openStream());
+                    }
+                    if ("charset".equals(fieldName)) {
+                        charset = Streams.asString(item.openStream());
                     }
                 } else {
                     log.info("Got an uploaded file: " + fieldName + ", name = " + item.getName());
@@ -89,7 +96,7 @@ public class ConvertPdb extends HttpServlet {
             final PdbInput pdbInput = new PdbInput();
             final PdbInput.Params params = new PdbInput.Params();
             params.includeAddlTitle = true;
-            params.inputEncoding = "utf-8";
+            params.inputEncoding = charset;
             final PdbInput.Result result = pdbInput.read(pdbMemoryStream, params);
 
             writer.println("Result: " + result.textDb.getBookCount() + " books");
@@ -135,6 +142,21 @@ public class ConvertPdb extends HttpServlet {
 
             final BlobKey blobKey = fileService.getBlobKey(file);
             writer.println("Download output file: <a href='/" + DownloadBlob.class.getName() + "?blobkey=" + blobKey.getKeyString() + "'>" + outputfilename + "</a>");
+
+            { // show sample verses
+                writer.println();
+                writer.println("Sample verses using the selected encoding: ");
+                final List<Rec> recs = result.textDb.toRecList();
+                int d = 1;
+                int pos = 0;
+                for (int i = 0; i < 20; i++) {
+                    if (pos >= recs.size()) break;
+                    final Rec rec = recs.get(pos);
+                    pos += d;
+                    d <<= 1;
+                    writer.printf(Locale.US, "%s %d:%d %s%n", result.versionInfo.getBookShortName(rec.book_1 - 1), rec.chapter_1, rec.verse_1, rec.text);
+                }
+            }
         } catch (PdbInput.InputException e) {
             writer.println("Error in input: " + e.getMessage());
         } catch (FileUploadException e) {

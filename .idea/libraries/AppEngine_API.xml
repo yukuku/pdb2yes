@@ -4,10 +4,7 @@
       <root url="file:///Developer/appengine-java-sdk/lib/user" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="file:///Developer/appengine-java-sdk/lib/user" />
-    </SOURCES>
+    <SOURCES />
     <jarDirectory url="file:///Developer/appengine-java-sdk/lib/user" recursive="false" />
-    <jarDirectory url="file:///Developer/appengine-java-sdk/lib/user" recursive="false" type="SOURCES" />
   </library>
 </component>

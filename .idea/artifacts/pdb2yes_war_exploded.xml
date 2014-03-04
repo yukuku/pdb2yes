@@ -16,8 +16,8 @@
           <element id="module-output" name="AlkitabConverter" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="AppEngine API" />
           <element id="library" level="project" name="commons-fileupload-1.3" />
+          <element id="library" level="project" name="AppEngine API" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="pdb2yes/web/Web" />

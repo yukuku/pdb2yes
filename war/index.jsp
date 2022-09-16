@@ -24,21 +24,33 @@ void dropdownCharset(JspWriter pw) throws IOException {
 
 <h2>Convert a PalmBible+ PDB file</h2>
 
-<h3>… to a YES file</h3>
-<form action="/yuku.pdb2yes.servlet.ConvertPdb" method="post" enctype="multipart/form-data">
-    Input file: <input type="file" name="pdbfile" /><br/>
-    PDB encoding: <% dropdownCharset(out); %><br/>
-    <input type="hidden" name="outputformat" value="yes" />
-    <input type="submit" value="Convert" />
-</form>
+<p>As of 2016, this online tool is no longer supported. <small>Reason: Google stopped supporting Blobstore and I haven't had time to 
+learn how to use the new Google Storage option in Java.</small> Please use the offline tools available here: 
+Tools for converting PalmBible+ PDB files to .yet files, and from .yet files to .yes files and internal app files, are available at <a href='https://goo.gl/3wo5zv'>https://goo.gl/3wo5zv</a>.
+</p>
 
-<h3>… or to a YET (text) file</h3>
-<form action="/yuku.pdb2yes.servlet.ConvertPdb" method="post" enctype="multipart/form-data">
-    Input file: <input type="file" name="pdbfile" /><br/>
-    PDB encoding: <% dropdownCharset(out); %><br/>
-    <input type="hidden" name="outputformat" value="yet" />
-    <input type="submit" value="Convert" />
-</form>
+<p>
+Run <tt>java -jar PdbToYet.jar</tt> (or other jar files) to see instructions how to use that.
+Please write to help@bibleforandroid.com if you need help.
+</p>
+
+<!--
+    <h3>… to a YES file</h3>
+    <form action="/yuku.pdb2yes.servlet.ConvertPdb" method="post" enctype="multipart/form-data">
+        Input file: <input type="file" name="pdbfile" /><br/>
+        PDB encoding: <% dropdownCharset(out); %><br/>
+        <input type="hidden" name="outputformat" value="yes" />
+        <input type="submit" value="Convert" />
+    </form>
+
+    <h3>… or to a YET (text) file</h3>
+    <form action="/yuku.pdb2yes.servlet.ConvertPdb" method="post" enctype="multipart/form-data">
+        Input file: <input type="file" name="pdbfile" /><br/>
+        PDB encoding: <% dropdownCharset(out); %><br/>
+        <input type="hidden" name="outputformat" value="yet" />
+        <input type="submit" value="Convert" />
+    </form>
+-->
 
 </body>
 </html>
